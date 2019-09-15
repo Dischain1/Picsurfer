@@ -25,9 +25,9 @@ namespace Picsurfer.Controllers
             {
                 var user = new User
                 {
-                    FirstName = "test",
-                    SecondName = "test",
-                    Patronimic = "test",
+                    FirstName = "test1",
+                    SecondName = "test2",
+                    Patronimic = "test3",
 
                     IsAdmin = false
                 };
