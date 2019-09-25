@@ -9,7 +9,7 @@ namespace Picsurfer.Controllers
 {
     public class HomeController : Controller
     {
-        private PictureSurferContext _context;
+        private PicsurferContext _context;
 
         public ActionResult Index()
         {
@@ -20,7 +20,7 @@ namespace Picsurfer.Controllers
 
         public ActionResult InitializeDatabase()
         {
-            _context = new PictureSurferContext();
+            _context = new PicsurferContext();
             if (!_context.Users.Any())
             {
                 var user = new User

@@ -2,9 +2,9 @@
 
 namespace Data
 {
-    public class PictureSurferContext : DbContext
+    public class PicsurferContext : DbContext
     {
-        public PictureSurferContext() : base("PictureSurfer")
+        public PicsurferContext() : base("PictureSurfer")
         { }
 
         public DbSet<User> Users { get; set; }
