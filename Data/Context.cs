@@ -7,8 +7,7 @@ namespace Data
     {
         public PicsurferContext() : base("PictureSurfer") { }
 
-        public PicsurferContext(string connectionStr) : base(connectionStr)
-        { }
+        public PicsurferContext(string connectionStr) : base(connectionStr){ }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Picture> Pictures { get; set; }
