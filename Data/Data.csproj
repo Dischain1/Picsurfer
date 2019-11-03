@@ -55,6 +55,10 @@
     <Compile Include="Migrations\201911031154495_FileNameLengthChange.designer.cs">
       <DependentUpon>201911031154495_FileNameLengthChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911031234495_ModelStringLengthChanges.cs" />
+    <Compile Include="Migrations\201911031234495_ModelStringLengthChanges.designer.cs">
+      <DependentUpon>201911031234495_ModelStringLengthChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +72,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911031154495_FileNameLengthChange.resx">
       <DependentUpon>201911031154495_FileNameLengthChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911031234495_ModelStringLengthChanges.resx">
+      <DependentUpon>201911031234495_ModelStringLengthChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

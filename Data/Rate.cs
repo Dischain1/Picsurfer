@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Data.Model
 {
     public class Rate
     {
+        [Key]
         public int Id { get; set; }
 
         public int UserId { get; set; }

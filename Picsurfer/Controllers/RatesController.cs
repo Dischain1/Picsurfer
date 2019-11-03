@@ -8,12 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using Data;
 using Data.Model;
+using Picsurfer.Models;
 
 namespace Picsurfer
 {
     public class RatesController : Controller
     {
-        private PicsurferContext db = new PicsurferContext();
+        private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
 
         // GET: Rates
         public ActionResult Index()
