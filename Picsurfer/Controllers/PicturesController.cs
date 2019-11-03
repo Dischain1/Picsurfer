@@ -8,14 +8,16 @@ using System.Web;
 using System.Web.Mvc;
 using Data;
 using Data.Model;
+using Picsurfer.Models;
 using Services;
 
 namespace Picsurfer.Controllers
 {
     public class PicturesController : Controller
     {
-        private PicsurferContext db = new PicsurferContext();
-        private PictureDataService pictureService = new PictureDataService(new PicsurferContext());
+        
+        private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
+        private PictureDataService pictureService = new PictureDataService(new PicsurferContext(ConnectionHelper.connStr));
 
         // GET: Pictures
         public ActionResult Index()
@@ -49,17 +51,22 @@ namespace Picsurfer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Extension")] Picture picture, HttpPostedFileBase uploadFile)
+        public ActionResult UploadFiles(HttpPostedFileBase[] filesToUpload)
         {
             try
             {
-                pictureService.Create(picture, uploadFile);
+                if (!pictureService.AreImages(filesToUpload))
+                {
+                    throw new ArgumentException("Не все загруженные файлы являются изображениями.");
+                }
+
+                pictureService.SavePicturesFromFiles(filesToUpload);
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //todo сообщение об ошибке
-                return View(picture);
+                return View("Error", model: new Error(e.Message));
             }
         }
 

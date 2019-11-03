@@ -12,7 +12,7 @@ namespace Data.Model
         [MaxLength(256)]
         public string Path { get; set; }
         [Required]
-        [MaxLength(30)]
+        [MaxLength(256)]
         public string Name { get; set; }
         [Required]
         [MaxLength(10)]

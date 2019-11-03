@@ -1,15 +1,18 @@
 ﻿using Data;
 using Data.Model;
+using DataService.Extensions;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 
 namespace Services
 {
     public class PictureDataService : IPictureService
     {
-        const string imageDirName = "images";
-        string imageDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), imageDirName);
+        const string ImageDirName = "images";
+        string ImageDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), ImageDirName);
 
         private PicsurferContext _context;
         public PictureDataService(PicsurferContext context)
@@ -17,25 +20,40 @@ namespace Services
             _context = context;
         }
 
-        public void SetUniquePath(Picture picture)
+        public PictureDataService(string connectionStr)
         {
-            picture.Path = Path.Combine(imageDirectoryPath, Guid.NewGuid() + picture.Name);
+            _context = new PicsurferContext(connectionStr);
         }
 
-        public void SavePicture(Picture picture, HttpPostedFileBase upload)
+        public string SetUniquePath(string fileName)
         {
-            SetUniquePath(picture);
-            upload.SaveAs(picture.Path);
+            return Path.Combine(ImageDirectoryPath, Guid.NewGuid() + fileName);
         }
 
-        public void Create(Picture picture, HttpPostedFileBase uploadFile)
+        public Picture PictureEntityFromFile(HttpPostedFileBase upload)
+        {
+            return new Picture() {
+                Extension = Path.GetExtension(upload.FileName),
+                Path = SetUniquePath(upload.FileName),
+                Name = upload.FileName,
+                Rates = null
+            };
+        }
+
+        public void SavePicturesFromFiles(HttpPostedFileBase[] filesToUpload)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    SavePicture(picture, uploadFile);
-                    _context.Pictures.Add(picture);
+                    foreach (var uploadedFile in filesToUpload)
+                    {
+                        var picture = PictureEntityFromFile(uploadedFile);
+                        uploadedFile.SaveAs(picture.Path);
+
+                        _context.Pictures.Add(picture);
+                    }
+                    
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -46,6 +64,11 @@ namespace Services
 
                 transaction.Commit();
             }
+        }
+
+        public bool AreImages(HttpPostedFileBase[] filesToUpload)
+        {
+            return filesToUpload.ToList().All(file => file.IsImage());
         }
     }
 }

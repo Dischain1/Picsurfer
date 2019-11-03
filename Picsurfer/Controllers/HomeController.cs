@@ -1,9 +1,7 @@
 ﻿using Data;
 using Data.Model;
-using System;
-using System.Collections.Generic;
+using Picsurfer.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Picsurfer.Controllers
@@ -21,7 +19,7 @@ namespace Picsurfer.Controllers
 
         public ActionResult InitializeDatabase()
         {
-            _context = new PicsurferContext();
+            _context = new PicsurferContext(ConnectionHelper.connStr);
             if (!_context.Users.Any())
             {
                 var user = new User
