@@ -60,7 +60,9 @@ namespace Picsurfer.Controllers
                     throw new ArgumentException("Не все загруженные файлы являются изображениями.");
                 }
 
-                pictureService.SavePicturesFromFiles(filesToUpload);
+                var currentAppDir = AppDomain.CurrentDomain.BaseDirectory;
+
+                pictureService.SavePicturesFromFiles(filesToUpload, currentAppDir);
                 return RedirectToAction("Index");
             }
             catch (Exception e)

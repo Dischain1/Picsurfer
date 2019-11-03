@@ -2,7 +2,6 @@
 using Data.Model;
 using DataService.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -12,7 +11,6 @@ namespace Services
     public class PictureDataService : IPictureService
     {
         const string ImageDirName = "images";
-        string ImageDirectoryPath => Path.Combine(Directory.GetCurrentDirectory(), ImageDirName);
 
         private PicsurferContext _context;
         public PictureDataService(PicsurferContext context)
@@ -25,22 +23,25 @@ namespace Services
             _context = new PicsurferContext(connectionStr);
         }
 
-        public string SetUniquePath(string fileName)
+        public Picture PictureEntityFromFile(HttpPostedFileBase upload, string baseDir)
         {
-            return Path.Combine(ImageDirectoryPath, Guid.NewGuid() + fileName);
-        }
+            var uniqueName = $"{Guid.NewGuid()}{upload.FileName}";
+            var directoryPath = Path.Combine(baseDir, ImageDirName);
 
-        public Picture PictureEntityFromFile(HttpPostedFileBase upload)
-        {
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
             return new Picture() {
                 Extension = Path.GetExtension(upload.FileName),
-                Path = SetUniquePath(upload.FileName),
-                Name = upload.FileName,
+                Path = Path.Combine(baseDir, ImageDirName, uniqueName),
+                Name = uniqueName,
                 Rates = null
             };
         }
 
-        public void SavePicturesFromFiles(HttpPostedFileBase[] filesToUpload)
+        public void SavePicturesFromFiles(HttpPostedFileBase[] filesToUpload, string baseDir)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -48,7 +49,7 @@ namespace Services
                 {
                     foreach (var uploadedFile in filesToUpload)
                     {
-                        var picture = PictureEntityFromFile(uploadedFile);
+                        var picture = PictureEntityFromFile(uploadedFile, baseDir);
                         uploadedFile.SaveAs(picture.Path);
 
                         _context.Pictures.Add(picture);

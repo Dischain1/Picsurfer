@@ -1,15 +1,18 @@
-﻿@model IEnumerable<Data.Model.Picture>
+﻿@using Services
+@model IEnumerable<Data.Model.Picture>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Лента</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+@foreach (var picture in Model)
+{
+    <img src="~/images/@picture.Name)" />
+}
+
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Path)
@@ -42,4 +45,4 @@
     </tr>
 }
 
-</table>
+</table>*@
