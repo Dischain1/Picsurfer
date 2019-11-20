@@ -65,7 +65,7 @@ namespace Picsurfer.Controllers
                 var currentAppDir = AppDomain.CurrentDomain.BaseDirectory;
 
                 pictureService.SavePicturesFromFiles(filesToUpload, currentAppDir);
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(PictureList));
             }
             catch (Exception e)
             {
