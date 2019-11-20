@@ -1,28 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Data;
+using Data.Model;
+using PagedList;
+using Picsurfer.Models;
+using Services;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Data;
-using Data.Model;
-using Picsurfer.Models;
-using Services;
 
 namespace Picsurfer.Controllers
 {
+    [Authorize]
     public class PicturesController : Controller
     {
-        
         private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
         private PictureDataService pictureService = new PictureDataService(new PicsurferContext(ConnectionHelper.connStr));
 
-        // GET: Pictures
-        public ActionResult Index()
+        const int PicturesPerPage = 5;
+
+        public ActionResult PictureList(int? page)
         {
-            return View(db.Pictures.ToList());
+            var pageNumber = page ?? 1;
+
+            var pictures = db.Pictures
+                .ToList()
+                .ToPagedList(pageNumber, PicturesPerPage);
+
+            return View(pictures);
         }
 
         // GET: Pictures/Details/5

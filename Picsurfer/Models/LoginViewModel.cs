@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Data.Model
+namespace Picsurfer.Models
 {
-    public class User
+    public class LoginViewModel
     {
-        [Key]
-        public int Id{ get; set; }
-
         [Required]
         [EmailAddress]
         [MaxLength(255)]
@@ -15,7 +12,5 @@ namespace Data.Model
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        public bool IsAdmin { get; set; }
     }
 }

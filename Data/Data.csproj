@@ -59,6 +59,10 @@
     <Compile Include="Migrations\201911031234495_ModelStringLengthChanges.designer.cs">
       <DependentUpon>201911031234495_ModelStringLengthChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911191856271_UserTable_changedForCorrectLogin.cs" />
+    <Compile Include="Migrations\201911191856271_UserTable_changedForCorrectLogin.designer.cs">
+      <DependentUpon>201911191856271_UserTable_changedForCorrectLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +79,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911031234495_ModelStringLengthChanges.resx">
       <DependentUpon>201911031234495_ModelStringLengthChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911191856271_UserTable_changedForCorrectLogin.resx">
+      <DependentUpon>201911191856271_UserTable_changedForCorrectLogin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

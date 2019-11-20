@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Data.Model
+namespace Picsurfer.Models
 {
-    public class User
+    public class RegisterModel
     {
-        [Key]
-        public int Id{ get; set; }
-
         [Required]
         [EmailAddress]
         [MaxLength(255)]
@@ -16,6 +13,8 @@ namespace Data.Model
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public bool IsAdmin { get; set; }
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Введенные пароли отличаются")]
+        public string ConfirmPassword { get; set; }
     }
 }

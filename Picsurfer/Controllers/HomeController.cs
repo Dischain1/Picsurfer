@@ -22,16 +22,14 @@ namespace Picsurfer.Controllers
             _context = new PicsurferContext(ConnectionHelper.connStr);
             if (!_context.Users.Any())
             {
-                var user = new User
+                var adminUser = new User
                 {
-                    FirstName = "test1",
-                    SecondName = "test2",
-                    Patronimic = "test3",
-
-                    IsAdmin = false
+                    Email = "qwe@qwe.ru",
+                    Password = "1",
+                    IsAdmin = true
                 };
 
-                _context.Users.Add(user);
+                _context.Users.Add(adminUser);
                 _context.SaveChanges();
             }
             ViewBag.Title = "DB is initialised";

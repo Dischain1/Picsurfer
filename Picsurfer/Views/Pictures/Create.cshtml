@@ -18,7 +18,8 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="file" name="filesToUpload" multiple="multiple"/><br>
+            <input type="file" name="filesToUpload" multiple="multiple" accept=".gif,.jpg,.jpeg,.png"/>
+            <br>
         </div>
     </div>
 
@@ -32,7 +33,7 @@
 }
 <hr />
 <div>
-    @Html.ActionLink("К списку", "Index")
+    @Html.ActionLink("К списку изображений", "Index")
 </div>
 
 @section Scripts {

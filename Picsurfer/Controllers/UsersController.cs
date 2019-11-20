@@ -1,20 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Data;
+using Data.Model;
+using Picsurfer.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Data;
-using Data.Model;
-using Picsurfer.Models;
+using System.Web.Security;
 
 namespace Picsurfer.Controllers
 {
     public class UsersController : Controller
     {
         private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = db.Users.FirstOrDefault(x => x.Email == model.Email);
+
+                if (user != null)
+                {
+                    FormsAuthentication.SetAuthCookie(model.Email, true);
+                    return RedirectToAction(nameof(PicturesController.PictureList), "Pictures");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = db.Users.FirstOrDefault(x => x.Email == model.Email);
+
+                if (user == null)
+                {
+                    var newSavedUser = SaveUser(model);
+
+                    if (newSavedUser != null)
+                    {
+                        FormsAuthentication.SetAuthCookie(newSavedUser.Email, true);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Введенный email уже используется");
+                }
+            }
+
+            return View(model);
+        }
+
+        private User SaveUser(RegisterModel model)
+        {
+            var newUser = new User
+            {
+                Email = model.Email,
+                Password = model.Password
+            };
+
+            db.Users.Add(newUser);
+            db.SaveChanges();
+
+            return db.Users
+                .Where(u => u.Email == model.Email && u.Password == model.Password)
+                .FirstOrDefault();
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction(nameof(Login));
+        }
 
         // GET: Users
         public ActionResult Index()
