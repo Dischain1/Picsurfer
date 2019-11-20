@@ -194,7 +194,6 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -256,19 +255,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Pictures\Create.cshtml" />
-    <Content Include="Views\Pictures\Delete.cshtml" />
-    <Content Include="Views\Pictures\Details.cshtml" />
-    <Content Include="Views\Pictures\Edit.cshtml" />
+    <Content Include="Views\Pictures\Upload.cshtml" />
     <Content Include="Views\Pictures\PictureList.cshtml" />
-    <Content Include="Views\Rates\Create.cshtml" />
-    <Content Include="Views\Rates\Delete.cshtml" />
-    <Content Include="Views\Rates\Details.cshtml" />
-    <Content Include="Views\Rates\Edit.cshtml" />
-    <Content Include="Views\Rates\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Register.cshtml" />
