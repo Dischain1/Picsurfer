@@ -9,21 +9,25 @@ using System.Web.Security;
 
 namespace Picsurfer.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
 
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
@@ -33,7 +37,7 @@ namespace Picsurfer.Controllers
 
                 if (user != null)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Email, true);
+                    FormsAuthentication.SetAuthCookie(user.Id.ToString(), true);
                     return RedirectToAction(nameof(PicturesController.PictureList), "Pictures");
                 }
                 else
@@ -46,6 +50,7 @@ namespace Picsurfer.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {

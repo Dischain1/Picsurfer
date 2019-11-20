@@ -11,17 +11,14 @@
 @foreach (var picture in Model)
 {
     <div class="img-container">
-        <div data-toggle="popover"
-             data-trigger="hover"
-             title="Dismissible popover"
-             data-content="And here's some amazing content. It's very engaging. Right?">
+        <div>
             <img src="~/images/@picture.Name" />
         </div>
         <div>
-            <a href="@Url.Action("Index", "Home")">
+            <a onclick="like(@picture.Id)">
                 <i class="glyphicon glyphicon-thumbs-up"></i>
             </a>
-            <a >
+            <a onclick="dislike(@picture.Id)">
                 <i class="glyphicon glyphicon-thumbs-down"></i>
             </a>
         </div>
@@ -50,5 +47,24 @@
     $(document).ready(function () {
         $('[data-toggle="popover"]').popover();
     });
+
+    function like(pictureId) {
+        $.ajax({
+            type: ``,
+            url: `@Url.Action("Like", "Rates")?pictureId=` + pictureId,
+            contentType: `application/json; charset=utf-8`,
+            dataType: `json`
+        });
+    }
+
+    function dislike(pictureId) {
+        $.ajax({
+            type: `POST`,
+            url: `@Url.Action("Dislike", "Rates")?pictureId=` + pictureId,
+            contentType: `application/json; charset=utf-8`,
+            dataType: `json`
+        });
+    }
+   
 </script>
 
