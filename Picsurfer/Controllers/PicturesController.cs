@@ -20,13 +20,11 @@ namespace Picsurfer.Controllers
 
         const int PicturesPerPage = 5;
 
-        public ActionResult PictureList(int? page)
+        public ActionResult PictureList(int? page = 1)
         {
-            var pageNumber = page ?? 1;
-
             var pictures = db.Pictures
                 .ToList()
-                .ToPagedList(pageNumber, PicturesPerPage);
+                .ToPagedList(page.Value, PicturesPerPage);
 
             return View(pictures);
         }

@@ -200,6 +200,7 @@
     <Compile Include="Models\ConnStringHelper.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\RatedPictures.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -264,6 +265,7 @@
     <Content Include="Views\Users\Register.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Rates\RatedPictures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

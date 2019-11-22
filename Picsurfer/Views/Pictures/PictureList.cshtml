@@ -50,7 +50,7 @@
 
     function like(pictureId) {
         $.ajax({
-            type: ``,
+            type: `POST`,
             url: `@Url.Action("Like", "Rates")?pictureId=` + pictureId,
             contentType: `application/json; charset=utf-8`,
             dataType: `json`

@@ -64,7 +64,7 @@ namespace Picsurfer.Controllers
 
                     if (newSavedUser != null)
                     {
-                        FormsAuthentication.SetAuthCookie(newSavedUser.Email, true);
+                        FormsAuthentication.SetAuthCookie(newSavedUser.Id.ToString(), true);
                         return RedirectToAction("Index", "Home");
                     }
                 }

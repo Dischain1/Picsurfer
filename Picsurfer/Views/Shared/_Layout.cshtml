@@ -21,6 +21,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Загрузить картинки", "Upload", "Pictures", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Рейтинг картинок", "RatedPictures", "Rates", new { area = "" }, null)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
