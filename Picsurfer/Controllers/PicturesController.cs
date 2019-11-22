@@ -44,6 +44,7 @@ namespace Picsurfer.Controllers
             return View(picture);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Upload()
         {
             return View();

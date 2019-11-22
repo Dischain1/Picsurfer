@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,18 +15,27 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                </button>
+
+                @if (HttpContext.Current.User.IsInRole("Admin"))
+                {
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                    </button>
+                }
                 @Html.ActionLink("Список картинок", "PictureList", "Pictures", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Загрузить картинки", "Upload", "Pictures", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Рейтинг картинок", "RatedPictures", "Rates", new { area = "" }, null)</li>
-                </ul>
+                @if (HttpContext.Current.User.IsInRole("Admin"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Загрузить картинки", "Upload", "Pictures", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Рейтинг картинок", "RatedPictures", "Rates", new { area = "" }, null)</li>
+                    </ul>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
+
         </div>
     </div>
     <div class="container body-content">

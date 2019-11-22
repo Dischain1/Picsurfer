@@ -1,9 +1,11 @@
 ﻿using Data;
 using Data.Model;
 using Picsurfer.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -37,7 +39,20 @@ namespace Picsurfer.Controllers
 
                 if (user != null)
                 {
-                    FormsAuthentication.SetAuthCookie(user.Id.ToString(), true);
+                    var authTicket = new FormsAuthenticationTicket(
+                        1,                          // version
+                        user.Email,                 // user name
+                        DateTime.Now,               // created
+                        DateTime.Now.AddDays(1),    // expires
+                        true,                       // persistent
+                        user.IsAdmin ? "Admin" : string.Empty     // storing roles
+                    );
+
+                    string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+
+                    var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    System.Web.HttpContext.Current.Response.Cookies.Add(authCookie);
+
                     return RedirectToAction(nameof(PicturesController.PictureList), "Pictures");
                 }
                 else
