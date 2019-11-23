@@ -102,7 +102,6 @@ namespace Picsurfer.Controllers
             var newUser = new User
             {
                 Email = model.Email,
-                Password = model.Password,
                 PasswordHash = passworHash
             };
            

@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201911231312553_hashMd5.designer.cs">
       <DependentUpon>201911231312553_hashMd5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911231346491_password_columnn_deleted.cs" />
+    <Compile Include="Migrations\201911231346491_password_columnn_deleted.designer.cs">
+      <DependentUpon>201911231346491_password_columnn_deleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911231312553_hashMd5.resx">
       <DependentUpon>201911231312553_hashMd5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911231346491_password_columnn_deleted.resx">
+      <DependentUpon>201911231346491_password_columnn_deleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
