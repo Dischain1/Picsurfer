@@ -25,7 +25,7 @@ namespace Picsurfer.Controllers
                 var adminUser = new User
                 {
                     Email = "qwe@qwe.ru",
-                    Password = "1",
+                    PasswordHash = "202cb962ac59075b964b07152d234b70",
                     IsAdmin = true
                 };
 
