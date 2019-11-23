@@ -22,7 +22,19 @@ namespace Picsurfer.Controllers
 
         public ActionResult PictureList(int? page = 1)
         {
+            var userId = db.GetUserId(User);
+
             var pictures = db.Pictures
+                .Include(p => p.Rates)
+                .Select(p => new UserRatedPicture
+                {
+                    Picture = p,
+                    UserRate = p.Rates.Any(r => r.UserId == userId && r.Like == true) 
+                        ? UserRate.Like 
+                        : p.Rates.Any(r => r.UserId == userId && r.Like == false) 
+                        ? UserRate.Dislike 
+                        :UserRate.NotRated,
+                })
                 .ToList()
                 .ToPagedList(page.Value, PicturesPerPage);
 
