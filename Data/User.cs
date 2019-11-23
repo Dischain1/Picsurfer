@@ -12,9 +12,10 @@ namespace Data.Model
         [MaxLength(255)]
         public string Email { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public string PasswordHash { get; set; }
 
         public bool IsAdmin { get; set; }
     }

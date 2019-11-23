@@ -5,6 +5,8 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -35,7 +37,9 @@ namespace Picsurfer.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = db.Users.FirstOrDefault(x => x.Email == model.Email);
+                var hash = GetMd5Hash(model.Password);
+                User user = db.Users.FirstOrDefault(x => x.Email == model.Email 
+                    && x.PasswordHash == hash);
 
                 if (user != null)
                 {
@@ -79,7 +83,7 @@ namespace Picsurfer.Controllers
 
                     if (newSavedUser != null)
                     {
-                        FormsAuthentication.SetAuthCookie(newSavedUser.Id.ToString(), true);
+                        FormsAuthentication.SetAuthCookie(newSavedUser.Email.ToString(), true);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -94,18 +98,38 @@ namespace Picsurfer.Controllers
 
         private User SaveUser(RegisterModel model)
         {
+            var passworHash = GetMd5Hash(model.Password);
             var newUser = new User
             {
                 Email = model.Email,
-                Password = model.Password
+                Password = model.Password,
+                PasswordHash = passworHash
             };
-
+           
             db.Users.Add(newUser);
             db.SaveChanges();
 
             return db.Users
-                .Where(u => u.Email == model.Email && u.Password == model.Password)
+                .Where(u => u.Email == model.Email && u.PasswordHash == passworHash)
                 .FirstOrDefault();
+        }
+
+        private string GetMd5Hash(string input)
+        {
+            using (MD5 md5Hash = MD5.Create())
+            {
+                // Convert the input string to a byte array and compute the hash.
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                StringBuilder sBuilder = new StringBuilder();
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+
+                return sBuilder.ToString();
+            }
         }
 
         public ActionResult Logout()
