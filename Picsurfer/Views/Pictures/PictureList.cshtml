@@ -6,80 +6,91 @@
 
 @{
     ViewBag.Title = "Список картинок";
+
+    var isAdmin = HttpContext.Current.User.IsInRole("Admin");
 }
 
-<h2>Моя лента</h2>
-
-@foreach (var ratedPicture in Model)
-{
-    var dislikeIconClass = string.Empty;
-    var likeIconClass = string.Empty;
-    if (ratedPicture.UserRate == UserRate.Dislike)
+<div class="pictures-container">
+    @foreach (var ratedPicture in Model)
     {
-        dislikeIconClass = "chosen-rate";
-    }
-    if (ratedPicture.UserRate == UserRate.Like)
-    {
-        likeIconClass = "chosen-rate";
-    }
+        var dislikeIconClass = string.Empty;
+        var likeIconClass = string.Empty;
+        if (ratedPicture.UserRate == UserRate.Dislike)
+        {
+            dislikeIconClass = "chosen-rate";
+        }
+        if (ratedPicture.UserRate == UserRate.Like)
+        {
+            likeIconClass = "chosen-rate";
+        }
 
-    <div class="img-container">
-        <div>
+        <div class="img-container" id="picture_@ratedPicture.Picture.Id">
             <img src="~/images/@ratedPicture.Picture.Name" />
+            <div class="icon-bar">
+                <a onclick="like(@ratedPicture.Picture.Id)"><i id="like_@ratedPicture.Picture.Id" class="glyphicon glyphicon-heart picture-icon like @likeIconClass"></i></a>
+                <a onclick="dislike(@ratedPicture.Picture.Id)"><i id="dislike_@ratedPicture.Picture.Id" class="glyphicon glyphicon-thumbs-down picture-icon dislike @dislikeIconClass"></i></a>
+                @if (isAdmin)
+                {
+                    <a onclick="deletePicture(@ratedPicture.Picture.Id)"><i class="glyphicon glyphicon glyphicon-floppy-remove picture-icon delete"></i></a>
+                }
+            </div>
         </div>
-        <div>
-            <a onclick="dislike(@ratedPicture.Picture.Id)">
-                <i id="dislike_@ratedPicture.Picture.Id" class="glyphicon glyphicon-thumbs-down rate-icon dislike @dislikeIconClass"></i>
-            </a>
-            <a onclick="like(@ratedPicture.Picture.Id)">
-                <i id="like_@ratedPicture.Picture.Id" class="glyphicon glyphicon-thumbs-up rate-icon like @likeIconClass"></i>
-            </a>
-        </div>
-    </div>
-}
+    }
+</div>
+
 
 <br />
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("PictureList", new { page }))
 
+
 <style>
+    .picture-icon {
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 18px;
+    }
+
+        .picture-icon:hover {
+            font-size: 20px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+    .icon-bar{
+        height: 40px;
+    }
+    .icon-bar .glyphicon {
+        margin: 5px;
+    }
+
+    .chosen-rate {
+        color: palevioletred;
+    }
+
+    .pictures-container {
+        margin-top: 20px;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-rows: repeat(3, 220px);
+    }
+
     .img-container {
         width: auto;
         text-align: center;
         padding: 20px;
     }
 
-    img {
-        max-width: 100%;
-        height: auto;
-        -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.4);
-        -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.4);
-        box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.4);
-    }
-
-    .rate-icon {
-        padding-top: 15px;
-        padding-bottom: 5px;
-        font-size: 21px;
-    }
-
-        .rate-icon:hover {
-            font-size: 23px;
-            padding-top: 12px;
-            padding-bottom: 2px;
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            -webkit-box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.3);
+            -moz-box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.3);
+            box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.3);
         }
-
-    .like {
-        margin-left: 20px;
-    }
-
-    .dislike {
-        margin-right: 20px;
-    }
-
-    .chosen-rate {
-        color: palevioletred;
-    }
 </style>
 
 
@@ -120,5 +131,15 @@
         });
     }
 
+    function deletePicture(pictureId) {
+        let imageContainerSelector = "#picture_" + pictureId;
+        $(imageContainerSelector).hide();
+        $.ajax({
+            type: `POST`,
+            url: `@Url.Action("Delete", "Pictures")?pictureId=` + pictureId,
+            contentType: `application/json; charset=utf-8`,
+            dataType: `json`
+        });
+    }
 </script>
 

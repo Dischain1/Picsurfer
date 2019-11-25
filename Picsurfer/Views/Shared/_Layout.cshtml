@@ -1,5 +1,9 @@
 ﻿@using System;
 
+@{
+    var isAdmin = HttpContext.Current.User.IsInRole("Admin");
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +20,18 @@
         <div class="container">
             <div class="navbar-header">
 
-                @if (HttpContext.Current.User.IsInRole("Admin"))
+                @if (isAdmin)
                 {
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                     </button>
                 }
                 @Html.ActionLink("Список картинок", "PictureList", "Pictures", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Избранное", "FavouriteList", "Pictures", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
             <div class="navbar-collapse collapse">
-                @if (HttpContext.Current.User.IsInRole("Admin"))
+                @if (isAdmin)
                 {
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Загрузить картинки", "Upload", "Pictures", new { area = "" }, null)</li>

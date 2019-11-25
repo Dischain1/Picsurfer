@@ -71,5 +71,26 @@ namespace Services
         {
             return filesToUpload.ToList().All(file => file.IsImage());
         }
+
+        public void Delete(int pictureId)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    Picture picture = _context.Pictures.Find(pictureId);
+                    _context.Pictures.Remove(picture);
+                    _context.SaveChanges();
+
+                    File.Delete(picture.Path);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                }
+            }
+
+        }
     }
 }
