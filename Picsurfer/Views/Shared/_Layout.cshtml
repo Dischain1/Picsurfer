@@ -27,17 +27,17 @@
                     </button>
                 }
                 @Html.ActionLink("Список картинок", "PictureList", "Pictures", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Избранное", "FavouriteList", "Pictures", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
             <div class="navbar-collapse collapse">
-                @if (isAdmin)
-                {
-                    <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Избранное", "FavouriteList", "Pictures", new { area = "" }, null)</li>
+                    @if (isAdmin)
+                    {
                         <li>@Html.ActionLink("Загрузить картинки", "Upload", "Pictures", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Рейтинг картинок", "RatedPictures", "Rates", new { area = "" }, null)</li>
-                    </ul>
-                }
+                    }
+                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
 
@@ -45,7 +45,7 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        <hr class="footer-divider" />
         <footer>
             <p>&copy; @DateTime.Now.Year - Picsurfer</p>
         </footer>
@@ -54,3 +54,9 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<style>
+    .footer-divider {
+        margin: 0 0 15px 0;
+    }
+</style>

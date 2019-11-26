@@ -14,8 +14,7 @@ namespace Picsurfer.Models
     {
         public static int GetUserId(this PicsurferContext db, IPrincipal User)
         {
-            return 4;
-            //return db.Users.Where(u => u.Email == User.Identity.Name).FirstOrDefault().Id;
+            return db.Users.Where(u => u.Email == User.Identity.Name).FirstOrDefault().Id;
         }
     }
 }

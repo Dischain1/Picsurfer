@@ -55,8 +55,10 @@ namespace Picsurfer
 
             if (previousRate != null)
             {
-                previousRate.Like = rate;
-                db.SaveChanges();
+                if (previousRate.Like == rate)
+                    db.Rates.Remove(previousRate);
+                else
+                    previousRate.Like = rate;
             }
             else
             {
@@ -67,8 +69,9 @@ namespace Picsurfer
                     UserId = userId
                 };
                 db.Rates.Add(newRate);
-                db.SaveChanges();
             }
+
+            db.SaveChanges();
         }
 
         protected override void Dispose(bool disposing)

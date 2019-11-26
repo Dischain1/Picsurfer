@@ -10,11 +10,20 @@
     var isAdmin = HttpContext.Current.User.IsInRole("Admin");
 }
 
+<!-- The Modal -->
+<div id="modal_container" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modal_img">
+</div>
+
 <div class="pictures-container">
     @foreach (var ratedPicture in Model)
     {
         var dislikeIconClass = string.Empty;
         var likeIconClass = string.Empty;
+
+        var id = ratedPicture.Picture.Id;
+
         if (ratedPicture.UserRate == UserRate.Dislike)
         {
             dislikeIconClass = "chosen-rate";
@@ -24,11 +33,11 @@
             likeIconClass = "chosen-rate";
         }
 
-        <div class="img-container" id="picture_@ratedPicture.Picture.Id">
-            <img src="~/images/@ratedPicture.Picture.Name" />
+        <div class="img-container" id="container_@id">
+            <img id="img_@id" src="~/images/@ratedPicture.Picture.Name" onclick="viewModal(@id)"/>
             <div class="icon-bar">
-                <a onclick="like(@ratedPicture.Picture.Id)"><i id="like_@ratedPicture.Picture.Id" class="glyphicon glyphicon-heart picture-icon like @likeIconClass"></i></a>
-                <a onclick="dislike(@ratedPicture.Picture.Id)"><i id="dislike_@ratedPicture.Picture.Id" class="glyphicon glyphicon-thumbs-down picture-icon dislike @dislikeIconClass"></i></a>
+                <a onclick="like(@id)"><i id="like_@id" class="glyphicon glyphicon-heart picture-icon like @likeIconClass"></i></a>
+                <a onclick="dislike(@id)"><i id="dislike_@id" class="glyphicon glyphicon-thumbs-down picture-icon dislike @dislikeIconClass"></i></a>
                 @if (isAdmin)
                 {
                     <a onclick="deletePicture(@ratedPicture.Picture.Id)"><i class="glyphicon glyphicon glyphicon-floppy-remove picture-icon delete"></i></a>
@@ -38,61 +47,9 @@
     }
 </div>
 
-
 <br />
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("PictureList", new { page }))
-
-
-<style>
-    .picture-icon {
-        margin-top: 5px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 18px;
-    }
-
-        .picture-icon:hover {
-            font-size: 20px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-        }
-
-    .icon-bar{
-        height: 40px;
-    }
-    .icon-bar .glyphicon {
-        margin: 5px;
-    }
-
-    .chosen-rate {
-        color: palevioletred;
-    }
-
-    .pictures-container {
-        margin-top: 20px;
-        display: grid;
-        grid-gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        grid-template-rows: repeat(3, 220px);
-    }
-
-    .img-container {
-        width: auto;
-        text-align: center;
-        padding: 20px;
-    }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            -webkit-box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.3);
-            -moz-box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.3);
-            box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.3);
-        }
-</style>
-
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -104,7 +61,7 @@
         let likeBtnIdSelector = "#like_" + pictureId;
         let dislikeBtnIdSelector = "#dislike_" + pictureId;
 
-        $(likeBtnIdSelector).addClass("chosen-rate");
+        $(likeBtnIdSelector).toggleClass("chosen-rate");
         $(dislikeBtnIdSelector).removeClass("chosen-rate");
 
         $.ajax({
@@ -120,8 +77,8 @@
         let likeBtnIdSelector = "#like_" + pictureId;
         let dislikeBtnIdSelector = "#dislike_" + pictureId;
 
+        $(dislikeBtnIdSelector).toggleClass("chosen-rate");
         $(likeBtnIdSelector).removeClass("chosen-rate");
-        $(dislikeBtnIdSelector).addClass("chosen-rate");
 
         $.ajax({
             type: `POST`,
@@ -132,7 +89,7 @@
     }
 
     function deletePicture(pictureId) {
-        let imageContainerSelector = "#picture_" + pictureId;
+        let imageContainerSelector = "#container_" + pictureId;
         $(imageContainerSelector).hide();
         $.ajax({
             type: `POST`,
@@ -141,5 +98,161 @@
             dataType: `json`
         });
     }
+
+    function viewModal(pictureId) {
+        let imageSelector = "#img_" + pictureId;
+        var image = $(imageSelector);
+
+        var modalImg = $("#modal_img");
+        modalImg.attr('src', image.attr('src'));
+
+        var modal = $("#modal_container");
+        modal.show();
+    }
+
+    function closeModal() {
+        var modal = $("#modal_container");
+        modal.hide();
+    }
 </script>
 
+<style>
+    .picture-icon {
+        margin-top: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 18px;
+    }
+
+        .picture-icon:hover {
+            font-size: 20px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+    .icon-bar {
+        height: 40px;
+    }
+
+        .icon-bar .glyphicon {
+            margin: 5px;
+        }
+
+    .chosen-rate {
+        color: palevioletred;
+    }
+
+    .pictures-container {
+        margin-top: 20px;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 0.4fr));
+        grid-template-rows: repeat(3, 220px);
+    }
+
+    .img-container {
+        width: auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+        .img-container img {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            -webkit-box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.2);
+            -moz-box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.2);
+            box-shadow: 10px 10px 5px -3px rgba(0,0,0,0.2);
+        }
+
+            .img-container img:hover {
+                opacity: 0.9;
+                -webkit-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.5);
+                -moz-box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.5);
+                box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.5);
+            }
+
+    .pagination {
+        margin: 10px 0;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 3; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    /* Add Animation */
+    .modal-content, #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @@-webkit-keyframes zoom {
+        from {
+            -webkit-transform: scale(0)
+        }
+
+        to {
+            -webkit-transform: scale(1)
+        }
+    }
+
+    @@keyframes zoom {
+        from {
+            transform: scale(0)
+        }
+
+        to {
+            transform: scale(1)
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        color: #ffffff;
+        font-size: 50px;
+        font-weight: bold;
+        transition: 0.3s;
+        opacity: 0.8;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* 100% Image Width on Smaller Screens */
+    @@media only screen and (max-width: 1200px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+</style>
