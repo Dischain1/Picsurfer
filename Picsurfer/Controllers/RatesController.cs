@@ -13,6 +13,8 @@ namespace Picsurfer
     public class RatesController : Controller
     {
         private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
+        private const int PicturesInRatedListPerPage = 9;
+
 
         [HttpPost]
         public void Like(int pictureId)
@@ -42,7 +44,7 @@ namespace Picsurfer
                 picture.Rating = picture.Likes - picture.Dislikes;
             }
 
-            return View(ratedPictures.OrderByDescending(x => x.Rating).ToPagedList(page.Value, 5));
+            return View(ratedPictures.OrderByDescending(x => x.Rating).ToPagedList(page.Value, PicturesInRatedListPerPage));
         }
 
         private void RatePicture(int pictureId, bool rate = true)
