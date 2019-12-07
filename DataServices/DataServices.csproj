@@ -52,8 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\HttpPostedFileBaseExtensions.cs" />
-    <Compile Include="IPictureService.cs" />
     <Compile Include="PictureDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,7 +8,7 @@ namespace Picsurfer.Controllers
 {
     public class HomeController : Controller
     {
-        private PicsurferContext _context;
+        private FileHubContext _context;
 
         public ActionResult Index()
         {
@@ -19,7 +19,7 @@ namespace Picsurfer.Controllers
 
         public ActionResult InitializeDatabase()
         {
-            _context = new PicsurferContext(ConnectionHelper.connStr);
+            _context = new FileHubContext(ConnectionHelper.connStr);
             if (!_context.Users.Any())
             {
                 var adminUser = new User

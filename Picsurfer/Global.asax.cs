@@ -56,7 +56,7 @@ namespace Picsurfer
                     string email = FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name;
                     List<string> roles = new List<string>();
 
-                    using (PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr))
+                    using (FileHubContext db = new FileHubContext(ConnectionHelper.connStr))
                     {
                         var user = db.Users.Where(u => u.Email == email).FirstOrDefault();
 

@@ -71,10 +71,18 @@
     <Compile Include="Migrations\201911231346491_password_columnn_deleted.designer.cs">
       <DependentUpon>201911231346491_password_columnn_deleted.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912071055567_toFileModel.cs" />
+    <Compile Include="Migrations\201912071055567_toFileModel.designer.cs">
+      <DependentUpon>201912071055567_toFileModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912071608436_downloadsCount.cs" />
+    <Compile Include="Migrations\201912071608436_downloadsCount.designer.cs">
+      <DependentUpon>201912071608436_downloadsCount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Picture.cs" />
+    <Compile Include="File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rate.cs" />
+    <Compile Include="Download.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +104,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911231346491_password_columnn_deleted.resx">
       <DependentUpon>201911231346491_password_columnn_deleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912071055567_toFileModel.resx">
+      <DependentUpon>201912071055567_toFileModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912071608436_downloadsCount.resx">
+      <DependentUpon>201912071608436_downloadsCount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,7 +16,7 @@ namespace Picsurfer
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}",
-                defaults: new { controller = "Pictures", action = "PictureList" }
+                defaults: new { controller = "Files", action = "FileList" }
             );
         }
     }

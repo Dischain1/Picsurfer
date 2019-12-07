@@ -191,8 +191,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PicturesController.cs" />
-    <Compile Include="Controllers\RatesController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
+    <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -200,7 +200,7 @@
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\RatedPictures.cs" />
+    <Compile Include="Models\DownloadFileModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -256,8 +256,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Pictures\Upload.cshtml" />
-    <Content Include="Views\Pictures\PictureList.cshtml" />
+    <Content Include="Views\Files\UploadPage.cshtml" />
+    <Content Include="Views\Files\FileList.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
@@ -265,7 +265,7 @@
     <Content Include="Views\Users\Register.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Rates\RatedPictures.cshtml" />
+    <Content Include="Views\Downloads\DownloadStatisctics.cshtml" />
     <Content Include="ConnStr.config" />
     <Content Include="ConnStr.Debug.config">
       <DependentUpon>ConnStr.config</DependentUpon>
@@ -276,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
     <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>

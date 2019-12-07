@@ -16,7 +16,7 @@ namespace Picsurfer.Controllers
     [Authorize]
     public class UsersController : Controller
     {
-        private PicsurferContext db = new PicsurferContext(ConnectionHelper.connStr);
+        private FileHubContext db = new FileHubContext(ConnectionHelper.connStr);
 
         [AllowAnonymous]
         public ActionResult Login()
@@ -57,7 +57,7 @@ namespace Picsurfer.Controllers
                     var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     System.Web.HttpContext.Current.Response.Cookies.Add(authCookie);
 
-                    return RedirectToAction(nameof(PicturesController.PictureList), "Pictures");
+                    return RedirectToAction(nameof(FilesController.FileList), "Files");
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Picsurfer.Controllers
                     if (newSavedUser != null)
                     {
                         FormsAuthentication.SetAuthCookie(newSavedUser.Email.ToString(), true);
-                        return RedirectToAction(nameof(PicturesController.PictureList), "Pictures");
+                        return RedirectToAction(nameof(FilesController.FileList), "Files");
                     }
                 }
                 else

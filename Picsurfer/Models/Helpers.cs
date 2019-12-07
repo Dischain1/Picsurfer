@@ -12,7 +12,7 @@ namespace Picsurfer.Models
 
     public static class UserIdExtension
     {
-        public static int GetUserId(this PicsurferContext db, IPrincipal User)
+        public static int GetUserId(this FileHubContext db, IPrincipal User)
         {
             return db.Users.Where(u => u.Email == User.Identity.Name).FirstOrDefault().Id;
         }

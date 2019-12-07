@@ -2,16 +2,17 @@
 
 namespace Data.Model
 {
-    public class Rate
+    public class Download
     {
         [Key]
         public int Id { get; set; }
 
         public int UserId { get; set; }
-        public int PictureId { get; set; }
-        public bool Like { get; set; }
+        public int FileId { get; set; }
+
+        public int Count { get; set; }
 
         public User User { get; set; }
-        public Picture Picture { get; set; }
+        public File File { get; set; }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Data.Model
 {
-    public class Picture
+    public class File
     {
         [Key]
         public int Id{ get; set; }
@@ -20,6 +19,6 @@ namespace Data.Model
         [MaxLength(10)]
         public string Extension { get; set; }
 
-        public virtual List<Rate> Rates { get; set; }
+        public virtual List<Download> Downloads { get; set; }
     }
 }

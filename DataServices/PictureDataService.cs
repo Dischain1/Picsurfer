@@ -1,47 +1,43 @@
 ﻿using Data;
-using Data.Model;
-using DataService.Extensions;
 using System;
 using System.IO;
-using System.Linq;
 using System.Web;
 
 namespace Services
 {
-    public class PictureDataService : IPictureService
+    public class FileDataService
     {
-        const string ImageDirName = "images";
+        const string FilesDirName = "files";
 
-        private PicsurferContext _context;
-        public PictureDataService(PicsurferContext context)
+        private FileHubContext _context;
+        public FileDataService(FileHubContext context)
         {
             _context = context;
         }
 
-        public PictureDataService(string connectionStr)
+        public FileDataService(string connectionStr)
         {
-            _context = new PicsurferContext(connectionStr);
+            _context = new FileHubContext(connectionStr);
         }
 
-        public Picture PictureEntityFromFile(HttpPostedFileBase upload, string baseDir)
+        public Data.Model.File ConstructFileDbEntity(HttpPostedFileBase upload, string baseDir)
         {
             var uniqueName = $"{Guid.NewGuid()}{upload.FileName}";
-            var directoryPath = Path.Combine(baseDir, ImageDirName);
+            var directoryPath = Path.Combine(baseDir, FilesDirName);
 
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
-            return new Picture() {
+            return new Data.Model.File() {
                 Extension = Path.GetExtension(upload.FileName),
-                Path = Path.Combine(baseDir, ImageDirName, uniqueName),
-                Name = uniqueName,
-                Rates = null
+                Path = Path.Combine(baseDir, FilesDirName, uniqueName),
+                Name = upload.FileName,
             };
         }
 
-        public void SavePicturesFromFiles(HttpPostedFileBase[] filesToUpload, string baseDir)
+        public void SaveFiles(HttpPostedFileBase[] filesToUpload, string baseDir)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -49,10 +45,10 @@ namespace Services
                 {
                     foreach (var uploadedFile in filesToUpload)
                     {
-                        var picture = PictureEntityFromFile(uploadedFile, baseDir);
-                        uploadedFile.SaveAs(picture.Path);
+                        var file = ConstructFileDbEntity(uploadedFile, baseDir);
+                        uploadedFile.SaveAs(file.Path);
 
-                        _context.Pictures.Add(picture);
+                        _context.Files.Add(file);
                     }
                     
                     _context.SaveChanges();
@@ -67,22 +63,17 @@ namespace Services
             }
         }
 
-        public bool AreImages(HttpPostedFileBase[] filesToUpload)
-        {
-            return filesToUpload.ToList().All(file => file.IsImage());
-        }
-
-        public void Delete(int pictureId)
+        public void Delete(int fileId)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    Picture picture = _context.Pictures.Find(pictureId);
-                    _context.Pictures.Remove(picture);
+                    Data.Model.File file = _context.Files.Find(fileId);
+                    _context.Files.Remove(file);
                     _context.SaveChanges();
 
-                    File.Delete(picture.Path);
+                    System.IO.File.Delete(file.Path);
                     transaction.Commit();
                 }
                 catch (Exception)

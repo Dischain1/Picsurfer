@@ -5,14 +5,14 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Data.PicsurferContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Data.FileHubContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Data.PicsurferContext context)
+        protected override void Seed(Data.FileHubContext context)
         {
             //  This method will be called after migrating to the latest version.
 

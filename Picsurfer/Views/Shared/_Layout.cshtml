@@ -30,12 +30,11 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Список картинок", "PictureList", "Pictures", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Избранное", "FavouriteList", "Pictures", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Список Файлов", "FileList", "Files", new { area = "" }, null)</li>
                     @if (isAdmin)
                     {
-                        <li>@Html.ActionLink("Загрузить картинки", "Upload", "Pictures", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Рейтинг картинок", "RatedPictures", "Rates", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Загрузить файлы", "UploadPage", "Files", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Статистика Файлов", "DownloadStatisctics", "Downloads", new { area = "" }, null)</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -47,7 +46,7 @@
         @RenderBody()
         <hr class="footer-divider" />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Picsurfer</p>
+            <p>&copy; @DateTime.Now.Year - FileHub</p>
         </footer>
     </div>
 

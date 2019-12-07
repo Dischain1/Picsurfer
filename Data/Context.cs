@@ -3,14 +3,14 @@ using System.Data.Entity;
 
 namespace Data
 {
-    public class PicsurferContext : DbContext
+    public class FileHubContext : DbContext
     {
-        public PicsurferContext() : base("PictureSurfer") { }
+        public FileHubContext() : base("FileHub") { }
 
-        public PicsurferContext(string connectionStr) : base(connectionStr){ }
+        public FileHubContext(string connectionStr) : base(connectionStr){ }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
-        public DbSet<Rate> Rates { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Download> Downloads { get; set; }
     }
 }
