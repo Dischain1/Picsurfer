@@ -236,6 +236,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -266,13 +267,6 @@
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Rates\RatedPictures.cshtml" />
-    <Content Include="ConnStr.config" />
-    <Content Include="ConnStr.Debug.config">
-      <DependentUpon>ConnStr.config</DependentUpon>
-    </Content>
-    <Content Include="ConnStr.Release.config">
-      <DependentUpon>ConnStr.config</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
