@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Data.Model
@@ -18,6 +19,9 @@ namespace Data.Model
         [Required]
         [MaxLength(10)]
         public string Extension { get; set; }
+
+        [Required]
+        public DateTime UploadDate { get; set; }
 
         public virtual List<Download> Downloads { get; set; }
     }

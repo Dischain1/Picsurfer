@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201912071608436_downloadsCount.designer.cs">
       <DependentUpon>201912071608436_downloadsCount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912081012526_uploadDate.cs" />
+    <Compile Include="Migrations\201912081012526_uploadDate.designer.cs">
+      <DependentUpon>201912081012526_uploadDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912071608436_downloadsCount.resx">
       <DependentUpon>201912071608436_downloadsCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912081012526_uploadDate.resx">
+      <DependentUpon>201912081012526_uploadDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
