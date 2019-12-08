@@ -7,7 +7,7 @@ namespace FileHub.Models
 {
     public static class ConnectionHelper
     {
-        public static string connStr = ConfigurationManager.ConnectionStrings["FileHubContext"].ConnectionString;
+        public static string connStr = ConfigurationManager.ConnectionStrings["FileHub"].ConnectionString;
     }
 
     public static class UserIdExtension
