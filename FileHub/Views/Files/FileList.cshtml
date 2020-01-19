@@ -22,7 +22,7 @@
 
 @if (!string.IsNullOrWhiteSpace(Model.query))
 {
-    <span>Результаты по запросу "@Model.query":</span>
+    <div style="padding-top:20px">Результаты по запросу "@Model.query":</div>
     <br />
 }
 
@@ -72,9 +72,9 @@
 }
 else
 {
-    <span style="padding-top: 30px">
+    <div style="padding-top: 20px; padding-bottom:20px">
         Файлы не найдены
-    </span>
+    </div>
 }
 
 <script type="text/javascript">

@@ -36,5 +36,19 @@ namespace FileHub.Controllers
 
             return View("Index");
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Разработан для учебных целей.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Мои контактные данные.";
+
+            return View();
+        }
     }
 }

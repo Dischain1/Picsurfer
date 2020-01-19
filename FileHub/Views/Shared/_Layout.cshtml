@@ -47,12 +47,14 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Поиск файлов", "FileList", "Files", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("MiniSearch", "FileList", "Files", new { area = "" }, null)</li>
                     @if (isAdmin)
                     {
                         <li>@Html.ActionLink("Загрузить файлы", "UploadPage", "Files", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Статистика Файлов", "DownloadStatisctics", "Downloads", new { area = "" }, null)</li>
                     }
+                    <li>@Html.ActionLink("О сайте", "About", "Home")</li>
+                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
