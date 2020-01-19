@@ -27,7 +27,7 @@
                 {
                     <tr id="@downloadFile.File.Id">
                         <td>@downloadFile.File.Name</td>
-                        <td>10.10.10</td>
+                        <td>@downloadFile.File.UploadDate.ToLongDateString() @downloadFile.File.UploadDate.ToShortTimeString()</td>
                         <td>@downloadFile.File.Extension</td>
                         <td class="centered">
                             @{

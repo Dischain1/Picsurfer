@@ -24,29 +24,6 @@ namespace FileHub
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        //protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        //{
-        //    HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
-        //    if (authCookie == null || authCookie.Value == "")
-        //        return;
-
-        //    FormsAuthenticationTicket authTicket;
-        //    try
-        //    {
-        //        authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-        //    }
-        //    catch
-        //    {
-        //        return;
-        //    }
-
-        //    // retrieve roles from UserData
-        //    string[] roles = authTicket.UserData.Split(';');
-
-        //    if (Context.User != null)
-        //        Context.User = new GenericPrincipal(Context.User.Identity, roles);
-        //}
-
         protected void Application_PostAuthenticateRequest (object sender, EventArgs e)
         {
             if (FormsAuthentication.CookiesSupported == true)

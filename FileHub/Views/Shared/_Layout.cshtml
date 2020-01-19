@@ -47,7 +47,7 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Список Файлов", "FileList", "Files", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Поиск файлов", "FileList", "Files", new { area = "" }, null)</li>
                     @if (isAdmin)
                     {
                         <li>@Html.ActionLink("Загрузить файлы", "UploadPage", "Files", new { area = "" }, null)</li>
@@ -63,7 +63,7 @@
         @RenderBody()
         <hr class="footer-divider" />
         <footer>
-            <p>&copy; @DateTime.Now.Year - FileHub</p>
+            <p>&copy; @DateTime.Now.Year - MiniSearch. Разработано Тухтасиновым Махмуджоном</p>
         </footer>
     </div>
 

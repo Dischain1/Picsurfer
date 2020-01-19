@@ -17,10 +17,21 @@ namespace FileHub.Controllers
 
         const int FilesPerPage = 10;
 
-        public ActionResult FileList(int? page = 1)
+        [HttpGet]
+        public ActionResult FileList(string query = "",  int? page = 1)
         {
-            var files = db.Files.ToList().ToPagedList(page.Value, FilesPerPage);
-            return View(files);
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                var files = db.Files.ToList().ToPagedList(page.Value, FilesPerPage);
+                return View(new FileSearchModel { Files = files, query = string.Empty });
+            }
+
+            var matchedFiles = db.Files
+                .Where(x=>x.Description.Contains(query))
+                .ToList()
+                .ToPagedList(page.Value, FilesPerPage);
+
+            return View(new FileSearchModel { Files = matchedFiles, query = query });
         }
 
         [Authorize(Roles = "Admin")]
@@ -31,13 +42,13 @@ namespace FileHub.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UploadFiles(HttpPostedFileBase[] filesToUpload)
+        public ActionResult UploadFile(HttpPostedFileBase fileToUpload, string description)
         {
             try
             {
                 var currentAppDir = AppDomain.CurrentDomain.BaseDirectory;
 
-                fileService.SaveFiles(filesToUpload, currentAppDir);
+                fileService.SaveFile(fileToUpload, description, currentAppDir);
                 return RedirectToAction(nameof(FileList));
             }
             catch (Exception e)

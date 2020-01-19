@@ -5,7 +5,7 @@ namespace Data
 {
     public class FileHubContext : DbContext
     {
-        public FileHubContext() : base("FileHub") { }
+        public FileHubContext() : base("MiniSearch") { }
 
         public FileHubContext(string connectionStr) : base(connectionStr){ }
 

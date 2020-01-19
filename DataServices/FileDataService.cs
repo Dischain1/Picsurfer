@@ -38,20 +38,17 @@ namespace Services
             };
         }
 
-        public void SaveFiles(HttpPostedFileBase[] filesToUpload, string baseDir)
+        public void SaveFile(HttpPostedFileBase fileToUpload, string description, string baseDir)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    foreach (var uploadedFile in filesToUpload)
-                    {
-                        var file = ConstructFileDbEntity(uploadedFile, baseDir);
-                        uploadedFile.SaveAs(file.Path);
+                    var file = ConstructFileDbEntity(fileToUpload, baseDir);
+                    file.Description = description;
+                    fileToUpload.SaveAs(file.Path);
 
-                        _context.Files.Add(file);
-                    }
-                    
+                    _context.Files.Add(file);
                     _context.SaveChanges();
                 }
                 catch (Exception)

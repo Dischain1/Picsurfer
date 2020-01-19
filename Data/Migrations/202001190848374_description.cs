@@ -1,0 +1,18 @@
+﻿namespace Data.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class description : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Files", "Description", c => c.String(nullable: false));
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Files", "Description");
+        }
+    }
+}

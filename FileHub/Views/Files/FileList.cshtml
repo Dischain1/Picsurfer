@@ -1,7 +1,7 @@
-﻿@using PagedList;
-@using PagedList.Mvc;
+﻿@using PagedList.Mvc;
+@using FileHub.Models
 
-@model IPagedList<Data.Model.File>
+@model FileSearchModel
 
 @{
     ViewBag.Title = "Список файлов";
@@ -9,14 +9,31 @@
     var isAdmin = HttpContext.Current.User.IsInRole("Admin");
 }
 
-@if (Model.Any())
+
+@using (Html.BeginForm("FileList", "Files", FormMethod.Get))
+{
+    <div class="form-inline md-form mr-auto mb-4" style="padding-top: 50px">
+        <input class="form-control mr-sm-2" name="query" type="text"
+               placeholder="Введите фрагмент описания файла" aria-label="Search" value="@Model.query">
+        <button class="btn btn-outline-warning btn-rounded my-0" type="submit">Поиск</button>
+    </div>
+}
+
+
+@if (!string.IsNullOrWhiteSpace(Model.query))
+{
+    <span>Результаты по запросу "@Model.query":</span>
+    <br />
+}
+
+@if (Model.Files.Any())
 {
     <div>
         <table class="table table-striped">
             <thead>
-                <tr >
+                <tr>
                     <th scope="col">Имя файла</th>
-                    <th scope="col">Дата загрузки</th>
+                    <th scope="col">Описание</th>
                     <th scope="col">Тип файла</th>
                     <th scope="col" class="centered">Скачать</th>
                     @if (isAdmin)
@@ -26,11 +43,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var file in Model)
+                @foreach (var file in Model.Files)
                 {
                     <tr id="@file.Id">
                         <td>@file.Name</td>
-                        <td>@file.UploadDate.ToString("g")</td>
+                        <td><span style="overflow:hidden; max-height:300px">@file.Description</span></td>
                         <td>@file.Extension</td>
                         <td class="centered">
                             <a href="@Url.Action("Download","Downloads", new { fileId = file.Id })"><i class="glyphicon glyphicon glyphicon-download-alt file-icon"></i></a>
@@ -49,14 +66,14 @@
 
     <br />
     <div>
-        Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("FileList", new { page }))
+        Страница @(Model.Files.PageCount < Model.Files.PageNumber ? 0 : Model.Files.PageNumber) из @Model.Files.PageCount
+        @Html.PagedListPager(Model.Files, page => Url.Action("FileList", new { Model.query, page }))
     </div>
 }
 else
 {
-    <span>
-        Пока что ничего не загружено
+    <span style="padding-top: 30px">
+        Файлы не найдены
     </span>
 }
 
@@ -79,11 +96,11 @@ else
     }
 
     .centered {
-        text-align:center;
+        text-align: center;
     }
 
     .file-icon:hover {
-        color:limegreen;
+        color: limegreen;
     }
 
     .pagination {

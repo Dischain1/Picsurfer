@@ -7,23 +7,31 @@
 <h3>Загрузка Файлов</h3>
 
 
-@using (Html.BeginForm("UploadFiles", "Files", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UploadFile", "Files", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="file" name="filesToUpload" multiple="multiple" accept=".doc,.docx,.pptx,.pdf"/>
+        <div class="col-md-10">
+            <input type="file" name="fileToUpload" />
             <br>
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-10">
+            <span>Описание файла</span><br />
+            <input type="text" name="description" />
+            <br>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-10">
             <input type="submit" value="Загрузить" class="btn btn-success" />
         </div>
     </div>

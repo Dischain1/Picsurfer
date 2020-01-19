@@ -24,5 +24,8 @@ namespace Data.Model
         public DateTime UploadDate { get; set; }
 
         public virtual List<Download> Downloads { get; set; }
+
+        [Required]
+        public string Description { get; set; }
     }
 }
